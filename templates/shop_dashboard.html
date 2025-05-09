@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <h2>Shop Stock</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            {% for product, quantity in stock.items() %}
+                <li style="padding: 8px; border-bottom: 1px solid #eee;">
+                    {{ product }}: {{ quantity }}
+                    {% if low_stock.get(product) %} <span style="color:red;">(Low Stock)</span> {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+
+        <h3 style="margin-top: 20px;">Request Stock</h3>
+        <form method="POST" action="{{ url_for('request_stock') }}" style="display: flex; flex-direction: column; max-width: 300px; margin-top: 10px;">
+            <label for="product" style="margin-bottom: 5px;">Product:</label>
+            <input type="text" name="product" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <label for="quantity" style="margin-bottom: 5px;">Quantity:</label>
+            <input type="number" name="quantity" min="1" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <input type="submit" value="Request Stock" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer;">
+        </form>
+
+        <h3 style="margin-top: 20px;">Return Excess Stock</h3>
+        <form method="POST" action="{{ url_for('return_stock') }}" style="display: flex; flex-direction: column; max-width: 300px; margin-top: 10px;">
+            <label for="product" style="margin-bottom: 5px;">Product:</label>
+            <input type="text" name="product" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <label for="quantity" style="margin-bottom: 5px;">Quantity to Return:</label>
+            <input type="number" name="quantity" min="1" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <input type="submit" value="Return Stock" style="background-color: #f0ad4e; color: white; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer;">
+        </form>
+    </div>
+{% endblock %}

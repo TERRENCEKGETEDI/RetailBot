@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div style="background-color: white; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <h2>Warehouse Stock</h2>
+        <ul style="list-style-type: none; padding: 0;">
+            {% for product, quantity in stock.items() %}
+                <li style="padding: 8px; border-bottom: 1px solid #eee;">{{ product }}: {{ quantity }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3 style="margin-top: 20px;">Add New Product</h3>
+        <form method="POST" action="{{ url_for('add_product') }}" style="display: flex; flex-direction: column; max-width: 300px; margin-top: 10px;">
+            <label for="product_name" style="margin-bottom: 5px;">Product Name:</label>
+            <input type="text" name="product_name" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <label for="initial_quantity" style="margin-bottom: 5px;">Initial Quantity (optional):</label>
+            <input type="number" name="initial_quantity" value="0" style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <input type="submit" value="Add Product" style="background-color: #28a745; color: white; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer;">
+        </form>
+
+        <h3 style="margin-top: 20px;">Delete Product</h3>
+        <form method="POST" action="{{ url_for('delete_product') }}" style="display: flex; flex-direction: column; max-width: 300px; margin-top: 10px;">
+            <label for="product_name" style="margin-bottom: 5px;">Product Name to Delete:</label>
+            <input type="text" name="product_name" required style="padding: 8px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 3px;"><br>
+            <input type="submit" value="Delete Product" style="background-color: #dc3545; color: white; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer;">
+        </form>
+    </div>
+{% endblock %}

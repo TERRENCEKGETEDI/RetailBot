@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RetailBots</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+        hr {
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        {% if 'username' in session %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% if get_user_role(session['username']) == 'warehouse' %}
+                | <a href="{{ url_for('warehouse_dashboard') }}">Warehouse</a>
+            {% elif get_user_role(session['username']) == 'shop' %}
+                | <a href="{{ url_for('shop_dashboard') }}">Shop</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            | <a href="{{ url_for('register') }}">Register</a>
+        {% endif %}
+    </nav>
+    <hr>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
